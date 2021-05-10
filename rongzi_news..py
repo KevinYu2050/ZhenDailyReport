@@ -36,7 +36,7 @@ def get_qimingpian_url():
         # print(res_json)
         decrypt_data = decrypt(res_json["encrypt_data"])
         json_data = json.loads(decrypt_data)["list"]
-        print(pd.DataFrame(json_data))
+        # print(pd.DataFrame(json_data))
         df_concat.append(pd.DataFrame(json_data))
         # print(json_data)
 
@@ -56,9 +56,9 @@ def proc_data(df, date):
             pass
         else:
             ret_string += row["yewu"]
-            ret_string += "["
+            ret_string += "「"
             ret_string += row["product"]
-            ret_string += "]"
+            ret_string += "」"
             ret_string += "完成由"
             
             lingtou = []
@@ -95,18 +95,20 @@ def proc_data(df, date):
 
 def get_36kr_news():
     url = "https://gateway.36kr.com/api/mis/nav/newsflash/flow"
-    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"pageSize":100,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjoxMjE4MjI0NjkzMzM0NDA1LCJsYXN0SWQiOjEyMTgwNDQzMzE0NjMwNDQsImZpcnN0Q3JlYXRlVGltZSI6MTYyMDYyNjUzNDUwNSwibGFzdENyZWF0ZVRpbWUiOjE2MjA2MTU1MjYwOTB9","siteId":1,"platformId":2}}))
+    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"pageSize":50,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjoxMjE4MjI0NjkzMzM0NDA1LCJsYXN0SWQiOjEyMTgwNDQzMzE0NjMwNDQsImZpcnN0Q3JlYXRlVGltZSI6MTYyMDYyNjUzNDUwNSwibGFzdENyZWF0ZVRpbWUiOjE2MjA2MTU1MjYwOTB9","siteId":1,"platformId":2}}))
     items = json.loads(response.text)["data"]["itemList"]
     news_list = []
 
     for item in items:
-        news_list.append(item["templateMaterial"]["widgetContent"].replace("36氪获悉，", "").replace("截至发稿，",""))
+        content = item["templateMaterial"]["widgetContent"]
+        if content.find("融资") == -1:
+            news_list.append(content.replace("36氪获悉，", "").replace("截至发稿，",""))
 
     return news_list
 
 def get_36kr_deep_news():
     url = "https://gateway.36kr.com/api/mis/page/theme/flow"
-    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"itemId":"327690223617","pageSize":10,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjo5MTEyOTgsImxhc3RJZCI6OTAxMTU2LCJmaXJzdENyZWF0ZVRpbWUiOjE2MDIzMjUyNjk3ODIsImxhc3RDcmVhdGVUaW1lIjoxNTk5Mjc3NjA2MTM2fQ","siteId":1,"platformId":2}}))
+    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"itemId":"327690223617","pageSize":1,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjo5MTEyOTgsImxhc3RJZCI6OTAxMTU2LCJmaXJzdENyZWF0ZVRpbWUiOjE2MDIzMjUyNjk3ODIsImxhc3RDcmVhdGVUaW1lIjoxNTk5Mjc3NjA2MTM2fQ","siteId":1,"platformId":2}}))
     items = json.loads(response.text)["data"]["itemList"]
     news_list = []
 
@@ -121,7 +123,7 @@ def compile_page(tag_dict, news_list, deep_news):
     page = ""
     page += "**********热门赛道**********\n\n"
     for tag in tag_dict.keys():
-        page += "[{}]\n\n".format(tag)
+        page += "【{}】\n\n".format(tag)
         count = 1
         for line in tag_dict[tag]:
             page += str(count) + ". {}。\n\n".format(line)
