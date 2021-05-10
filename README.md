@@ -8,7 +8,7 @@
 
 ### Usage
 - Installation
-  - Clone this repo by running `git clone `
+  - Clone this repo by running `git clone https://github.com/KevinYu2050/ZhenDailyReport.git`
   - Install the respective Python dependencies by running `pip install -r requirements.txt` 
 - Execution
   - Change the `UNION_ID` field in `rongzi_news.py` to the current session union id for 企名片, as shown in the following image:
