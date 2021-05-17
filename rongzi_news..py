@@ -21,7 +21,18 @@ tag_dict = {
     "教育培训":[],
     "生活服务":[],
     "服装纺织":[],
-    "消费升级":[]
+    "消费升级":[],
+    "先进制造":[],
+    "硬科技":[],
+    "硬件":[],
+    "区块链":[],
+    "汽车交通":[],
+    "农业":[],
+    "批发零售":[],
+    "VR/AR":[],
+    "社交社区":[],
+    "游戏":[],
+    "物联网":[]
 }
 
 def get_qimingpian_url():
@@ -108,7 +119,7 @@ def get_36kr_news():
 
 def get_36kr_deep_news():
     url = "https://gateway.36kr.com/api/mis/page/theme/flow"
-    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"itemId":"327690223617","pageSize":1,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjo5MTEyOTgsImxhc3RJZCI6OTAxMTU2LCJmaXJzdENyZWF0ZVRpbWUiOjE2MDIzMjUyNjk3ODIsImxhc3RDcmVhdGVUaW1lIjoxNTk5Mjc3NjA2MTM2fQ","siteId":1,"platformId":2}}))
+    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"itemId": "327690223617","pageSize":1,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjo5MTEyOTgsImxhc3RJZCI6OTAxMTU2LCJmaXJzdENyZWF0ZVRpbWUiOjE2MDIzMjUyNjk3ODIsImxhc3RDcmVhdGVUaW1lIjoxNTk5Mjc3NjA2MTM2fQ","siteId":1,"platformId":2}}))
     items = json.loads(response.text)["data"]["itemList"]
     news_list = []
 
@@ -133,7 +144,7 @@ def compile_page(tag_dict, news_list, deep_news):
 
     count = 1
     for news in news_list:
-        page += str(count) + ". {}。\n\n".format(news)
+        page += str(count) + ". {} \n\n".format(news)
         count += 1
 
     page += "**********深度阅读**********\n\n"
