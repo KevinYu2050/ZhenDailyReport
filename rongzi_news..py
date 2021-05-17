@@ -5,6 +5,8 @@ import pandas as pd
 import requests
 import ast
 from datetime import datetime
+from bs4 import BeautifulSoup
+
 
 
 
@@ -107,13 +109,14 @@ def proc_data(df, date):
     return tag_dict
 
 def get_36kr_news():
-    url = "https://gateway.36kr.com/api/mis/nav/newsflash/flow"
-    response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"pageSize":50,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjoxMjE4MjI0NjkzMzM0NDA1LCJsYXN0SWQiOjEyMTgwNDQzMzE0NjMwNDQsImZpcnN0Q3JlYXRlVGltZSI6MTYyMDYyNjUzNDUwNSwibGFzdENyZWF0ZVRpbWUiOjE2MjA2MTU1MjYwOTB9","siteId":1,"platformId":2}}))
-    items = json.loads(response.text)["data"]["itemList"]
-    news_list = []
+    # url = "https://gateway.36kr.com/api/mis/nav/newsflash/flow"
+    # response = requests.post(url, headers={"content-type": "application/json"}, data=json.dumps({"partner_id":"web","param":{"pageSize":50,"pageEvent":1,"pageCallback":"eyJmaXJzdElkIjoxMjI4NDcxMjc1MTk3MDU2LCJsYXN0SWQiOjEyMjgzNjUwMTA1MjI0OTcsImZpcnN0Q3JlYXRlVGltZSI6MTYyMTI1MTkzNjIzMCwibGFzdENyZWF0ZVRpbWUiOjE2MjEyNDU0NTAzNDl9","siteId":1,"platformId":2}}))
+    # items = json.loads(response.text)["data"]["itemList"]
+    # news_list = []
+
 
     for item in items:
-        content = item["templateMaterial"]["widgetContent"]
+        # content = item["templateMaterial"]["widgetContent"]
         if content.find("融资") == -1:
             news_list.append(content.replace("36氪获悉，", "").replace("截至发稿，",""))
 
