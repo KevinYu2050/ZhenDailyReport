@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 # Needs to be changed everytime
-UNION_ID = "+0b5plWXT2VxnJh0ukCF5AFPT4MOsF1SMjLLZyz46pZefcz7eIATKkhYTrIUv2zFeJWqqIs6kiQsM8IbOYgM5A=="
+UNION_ID = "oDeAKQ+7JjDhaBPNN5yeDYHbNBJtOMdy+0m+i2fvHuGAGbdcl144UAZrjuk4uynreJWqqIs6kiQsM8IbOYgM5A=="
 tag_dict = {
     "企业服务": [],
     "医疗健康": [],
@@ -22,8 +22,19 @@ tag_dict = {
     "生活服务": [],
     "服装纺织": [],
     "消费升级": [],
+    "先进制造": [],
+    "硬科技": [],
+    "硬件": [],
+    "区块链": [],
+    "汽车交通": [],
+    "农业": [],
+    "批发零售": [],
+    "VR/AR": [],
+    "社交社区": [],
+    "游戏": [],
+    "物联网": [],
     "物流运输": [],
-    "先进制造": []
+    "餐饮业": []
 }
 
 
@@ -36,14 +47,12 @@ def get_qimingpian_url():
         payload = {"page": page, "unionid": UNION_ID}
         response = requests.post(url, data=payload)
         res_json = json.loads(response.text)
-
-        # if res_json["status"] != 0:
-        #     break
-
-        print(res_json)
+        # print(res_json)
         decrypt_data = decrypt(res_json["encrypt_data"])
         json_data = json.loads(decrypt_data)["list"]
+        # print(pd.DataFrame(json_data))
         df_concat.append(pd.DataFrame(json_data))
+        # print(json_data)
 
     return pd.concat(df_concat)
 
@@ -142,7 +151,7 @@ def compile_page(tag_dict, news_list, deep_news):
 
     count = 1
     for news in news_list:
-        page += str(count) + ". {}。\n\n".format(news)
+        page += str(count) + ". {} \n\n".format(news)
         count += 1
 
     page += "**********深度阅读**********\n\n"
