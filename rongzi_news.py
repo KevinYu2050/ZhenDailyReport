@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 
 
 # Needs to be changed everytime
-UNION_ID = "oDeAKQ+7JjDhaBPNN5yeDYHbNBJtOMdy+0m+i2fvHuGAGbdcl144UAZrjuk4uynreJWqqIs6kiQsM8IbOYgM5A=="
+UNION_ID = "oDeAKQ+7JjDhaBPNN5yeDYHbNBJtOMdy+0m+i2fvHuFWbYPfu4FMQB4SiT8f/hNXeJWqqIs6kiQsM8IbOYgM5A=="
 
 
 tag_dict = {
@@ -38,7 +38,8 @@ tag_dict = {
     "游戏": [],
     "物联网": [],
     "物流运输": [],
-    "餐饮业": []
+    "餐饮业": [],
+    "工具软件": []
 }
 
 
